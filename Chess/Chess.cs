@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
 
+using Chess.Pieces;
+
 namespace Chess
 {
     public partial class Chess : Form
@@ -17,9 +19,9 @@ namespace Chess
 
         Piece SelectedPiece;
 
-        private static Piece[][]? pieces { get; set; }
+        public static Piece[][]? pieces { get; set; }
 
-        static PictureBox[][]? board;
+        public static PictureBox[][]? board;
 
         public Chess()
         {
@@ -116,20 +118,30 @@ namespace Chess
             labelX.Text = x.ToString();
             labelY.Text = y.ToString();
 
-            var piece = pieces[x][y];
             ClearBoard();
-            piece.ShowAvailableMoves();
-
-            SelectedPiece = piece;
-
-
-
-
+            
+            if (((PictureBox)sender).BackColor == Color.Green)
+            {
+                if (SelectedPiece is not null || SelectedPiece is not Empty)
+                {
+                    pieces[x][y] = SelectedPiece;
+                    pieces[SelectedPiece.x][SelectedPiece.y] = new Empty(SelectedPiece.x, SelectedPiece.y, "");
+                    SelectedPiece.x = x;
+                    SelectedPiece.y = y;
+                    
+                }
+            }
+            else
+            {
+                var piece = pieces[x][y];
+                
+                piece.ShowAvailableMoves();
+                SelectedPiece = piece;
+            }
         }
 
         public void ClearBoard()
         {
-
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -144,139 +156,10 @@ namespace Chess
                     }
                 }
             }
-
         }
 
-        abstract class Piece
-        {
-            public int x { get; set; }
-            public int y { get; set; }
-
-            public string? team { get; set; }
-
-            public Piece(int x, int y, string? team)
-            {
-                this.x = x;
-                this.y = y;
-                this.team = team;
-            }
-
-            public virtual void ShowAvailableMoves()
-            {
-                int d = 0;
-            }
-
-        }
-
-        class Pawn : Piece
-        {
-            public Pawn(int x, int y, string? team) : base(x, y, team)
-            {
-
-            }
-
-            public override void ShowAvailableMoves()
-            {
-
-                if (team == "[")
-                {
-
-                    if (pieces[x + 1][y] is Empty)
-                    {
-                        board[x + 1][y].BackColor = Color.Green;
-                    }
-
-                }
-                else if (team == "]")
-                {
-
-                    if (pieces[x - 1][y] is Empty)
-                    {
-                        board[x - 1][y].BackColor = Color.Green;
-                    }
-
-                }
-
-            }
-        }
-
-        class Empty : Piece
-        {
-            public Empty(int x, int y, string? team) : base(x, y, team)
-            {
-
-            }
-
-            public override void ShowAvailableMoves()
-            {
-
-            }
-        }
-
-        class Rook : Piece
-        {
-            public Rook(int x, int y, string? team) : base(x, y, team)
-            {
-
-            }
-
-            public override void ShowAvailableMoves()
-            {
-
-            }
-        }
-
-        class Knight : Piece
-        {
-            public Knight(int x, int y, string? team) : base(x, y, team)
-            {
-
-            }
-
-            public override void ShowAvailableMoves()
-            {
-
-            }
-        }
-
-        class Bishop : Piece
-        {
-            public Bishop(int x, int y, string? team) : base(x, y, team)
-            {
-
-            }
-
-            public override void ShowAvailableMoves()
-            {
-
-            }
-        }
-
-        class Queen : Piece
-        {
-            public Queen(int x, int y, string? team) : base(x, y, team)
-            {
-
-            }
-
-            public override void ShowAvailableMoves()
-            {
-
-            }
-        }
-
-        class King : Piece
-        {
-            public King(int x, int y, string? team) : base(x, y, team)
-            {
-
-            }
-
-            public override void ShowAvailableMoves()
-            {
-
-            }
-        }
+      
+    
     }
 
 }

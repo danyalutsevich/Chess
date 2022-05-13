@@ -59,6 +59,8 @@ namespace Chess.Pieces
         {
             Chess.board[this.x][this.y].Image = Textures.Empty;
 
+            Chess.pieces[this.x][this.y] = new Empty(this.x,this.y,"");
+
             this.x = x;
             this.y = y;
 

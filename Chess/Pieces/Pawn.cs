@@ -18,35 +18,40 @@ namespace Chess.Pieces
 
         public override void ShowAvailableMoves()
         {
+            int Direction = 0;
 
             if (team == "[")
             {
-                if (Chess.pieces[x + 1][y] is Empty)
-                {
-                    Chess.board[x + 1][y].BackColor = Color.Green;
-                }
-                if (firstMove)
-                {
-                    if (Chess.pieces[x + 2][y] is Empty)
-                    {
-                        Chess.board[x + 2][y].BackColor = Color.Green;
-                    }
-                }
+                Direction = 1;
             }
             else if (team == "]")
             {
-                if (Chess.pieces[x - 1][y] is Empty)
+                Direction = -1;
+            }
+
+            try
+            {
+                if (Chess.pieces[x + Direction][y] is Empty)
                 {
-                    Chess.board[x - 1][y].BackColor = Color.Green;
+                    Chess.board[x + Direction][y].BackColor = Color.Green;
                 }
                 if (firstMove)
                 {
-                    if (Chess.pieces[x - 2][y] is Empty)
+                    if (Chess.pieces[x + Direction * 2][y] is Empty)
                     {
-                        Chess.board[x - 2][y].BackColor = Color.Green;
+                        Chess.board[x + Direction * 2][y].BackColor = Color.Green;
                     }
                 }
+                if (Chess.pieces[x + Direction][y + 1] is not Empty)
+                {
+                    Chess.board[x + Direction][y + 1].BackColor = Color.Green;
+                }
+                if (Chess.pieces[x + Direction][y - 1] is not Empty)
+                {
+                    Chess.board[x + Direction][y - 1].BackColor = Color.Green;
+                }
             }
+            catch { }
 
         }
 
@@ -62,12 +67,12 @@ namespace Chess.Pieces
             firstMove = false;
 
             UpdateTexture();
-            
+
         }
 
         public override void UpdateTexture()
         {
-            
+
             if (team == "[")
             {
                 Chess.board[x][y].Image = Textures._Pawn;

@@ -129,11 +129,14 @@ namespace Chess
             else
             {
                 var piece = pieces[x][y];
-                ClearBoard();
-                piece.ShowAvailableMoves();
-                SelectedPiece = piece;
+                if (piece is not Empty)
+                {
+                    ClearBoard();
+                    piece.ShowAvailableMoves();
+                    SelectedPiece = piece;
+                }
             }
-            
+
         }
 
         public void ClearBoard()

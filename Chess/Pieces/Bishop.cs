@@ -12,46 +12,60 @@ namespace Chess.Pieces
     {
         public Bishop(int x, int y, string? team) : base(x, y, team)
         {
-
+            if (team == "[")
+            {
+                texture = Textures._Bishop;
+            }
+            else if (team == "]")
+            {
+                texture = Textures.Bishop_;
+            }
         }
 
         public override void ShowAvailableMoves()
         {
+            int x = this.x;
+            int y = this.y;
+            bool flag = false;
 
-            int x = this.x - 1;
-            int y = this.y + 1;
-
-            try
+            for (int dx = -1; dx <= 1; dx += 2)
             {
-
-                while (Chess.pieces[x][y].team == "")
+                for (int dy = -1; dy <= 1; dy += 2)
                 {
-                    x--;
-                    y++;
+                    x += dx;
+                    y += dy;
 
-                    Chess.board[x][y].BackColor = Color.Green;
-
-                    if (Chess.pieces[x][y].team != this.team && Chess.pieces[x][y].team != "")
+                    try
                     {
-                        break;
+                        while (true)
+                        {
+                            var piece = Chess.pieces[x][y];
+
+                            if (piece.team == this.team || flag )
+                            {
+                                break;
+                            }
+
+                            if((piece.team != this.team && piece.team != ""))
+                            {
+                                flag = true;
+                            }
+                            
+                            Chess.board[x][y].BackColor = Color.Green;
+                         
+                            x += dx;
+                            y += dy;
+                        }
                     }
-
+                    catch { }
+                    finally
+                    {
+                        x = this.x;
+                        y = this.y;
+                        flag = false;
+                    }
                 }
-
             }
-            catch { }
-
-        }
-
-        public override void Move(int x, int y)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void UpdateTexture()
-        {
-            throw new NotImplementedException();
         }
     }
-
 }

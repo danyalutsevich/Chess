@@ -14,6 +14,15 @@ namespace Chess.Pieces
         public Pawn(int x, int y, string? team) : base(x, y, team)
         {
             firstMove = true;
+
+            if (team == "[")
+            {
+                texture = Textures._Pawn;
+            }
+            else if (team == "]")
+            {
+                texture = Textures.Pawn_;
+            }
         }
 
         public override void ShowAvailableMoves()
@@ -28,6 +37,10 @@ namespace Chess.Pieces
             {
                 Direction = -1;
             }
+
+
+            // TODO :
+            // you can beat your own piece
 
             try
             {
@@ -57,34 +70,10 @@ namespace Chess.Pieces
 
         public override void Move(int x, int y)
         {
-            Chess.board[this.x][this.y].Image = Textures.Empty;
 
-            Chess.pieces[this.x][this.y] = new Empty(this.x,this.y,"");
-
-            this.x = x;
-            this.y = y;
-
-            Chess.pieces[x][y] = this;
-
+            base.Move(x, y);
             firstMove = false;
 
-            UpdateTexture();
-
         }
-
-        public override void UpdateTexture()
-        {
-
-            if (team == "[")
-            {
-                Chess.board[x][y].Image = Textures._Pawn;
-            }
-            else if (team == "]")
-            {
-                Chess.board[x][y].Image = Textures.Pawn_;
-            }
-
-        }
-
     }
 }

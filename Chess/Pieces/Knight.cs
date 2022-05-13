@@ -18,7 +18,7 @@ namespace Chess.Pieces
         {
 
         }
-        
+
         public override void Move(int x, int y)
         {
             throw new NotImplementedException();

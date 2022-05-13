@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Chess.Pieces
 {
@@ -12,6 +13,7 @@ namespace Chess.Pieces
         public int y { get; set; }
 
         public string? team { get; set; }
+        public Bitmap texture { get; set; }
 
         public Piece(int x, int y, string? team)
         {
@@ -22,9 +24,33 @@ namespace Chess.Pieces
 
         public abstract void ShowAvailableMoves();
 
-        public abstract void Move(int x, int y);
+        public virtual void UpdateTexture()
+        {
+            if (team == "[")
+            {
+                Chess.board[x][y].Image = this.texture;
+            }
+            else if (team == "]")
+            {
+                Chess.board[x][y].Image = this.texture;
+            }
+        }
 
-        public abstract void UpdateTexture();
+        public virtual void Move(int x, int y)
+        {
+            Chess.board[this.x][this.y].Image = Textures.Empty;
+
+            Chess.pieces[this.x][this.y] = new Empty(this.x, this.y, "");
+
+            this.x = x;
+            this.y = y;
+
+            Chess.pieces[x][y] = this;
+
+
+            UpdateTexture();
+
+        }
 
     }
 }

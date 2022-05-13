@@ -118,26 +118,22 @@ namespace Chess
             labelX.Text = x.ToString();
             labelY.Text = y.ToString();
 
-            ClearBoard();
-            
-            if (((PictureBox)sender).BackColor == Color.Green)
+            if (((PictureBox)sender).BackColor.Equals(Color.Green))
             {
                 if (SelectedPiece is not null || SelectedPiece is not Empty)
                 {
-                    pieces[x][y] = SelectedPiece;
-                    pieces[SelectedPiece.x][SelectedPiece.y] = new Empty(SelectedPiece.x, SelectedPiece.y, "");
-                    SelectedPiece.x = x;
-                    SelectedPiece.y = y;
-                    
+                    ClearBoard();
+                    SelectedPiece.Move(x, y);
                 }
             }
             else
             {
                 var piece = pieces[x][y];
-                
+                ClearBoard();
                 piece.ShowAvailableMoves();
                 SelectedPiece = piece;
             }
+            
         }
 
         public void ClearBoard()
@@ -157,9 +153,6 @@ namespace Chess
                 }
             }
         }
-
-      
-    
     }
 
 }

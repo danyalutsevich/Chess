@@ -22,5 +22,9 @@ namespace Chess.Pieces
 
         public abstract void ShowAvailableMoves();
 
+        public abstract void Move(int x, int y);
+
+        public abstract void UpdateTexture();
+
     }
 }

@@ -18,7 +18,7 @@ namespace Chess.Pieces
 
         public override void ShowAvailableMoves()
         {
-            
+
             if (team == "[")
             {
                 if (Chess.pieces[x + 1][y] is Empty)
@@ -47,7 +47,37 @@ namespace Chess.Pieces
                     }
                 }
             }
-            firstMove = false;
+
         }
+
+        public override void Move(int x, int y)
+        {
+            Chess.board[this.x][this.y].Image = Textures.Empty;
+
+            this.x = x;
+            this.y = y;
+
+            Chess.pieces[x][y] = this;
+
+            firstMove = false;
+
+            UpdateTexture();
+            
+        }
+
+        public override void UpdateTexture()
+        {
+            
+            if (team == "[")
+            {
+                Chess.board[x][y].Image = Textures._Pawn;
+            }
+            else if (team == "]")
+            {
+                Chess.board[x][y].Image = Textures.Pawn_;
+            }
+
+        }
+
     }
 }

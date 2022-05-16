@@ -38,10 +38,6 @@ namespace Chess.Pieces
                 Direction = -1;
             }
 
-
-            // TODO :
-            // you can beat your own piece
-
             try
             {
                 if (Chess.pieces[x + Direction][y] is Empty)
@@ -55,11 +51,15 @@ namespace Chess.Pieces
                         Chess.board[x + Direction * 2][y].BackColor = Color.Green;
                     }
                 }
-                if (Chess.pieces[x + Direction][y + 1] is not Empty)
+                
+                // Kill enemy
+                var enemyRight = Chess.pieces[x + Direction][y + 1];
+                var enemyLeft = Chess.pieces[x + Direction][y - 1];
+                if (enemyRight is not Empty && enemyRight.team != team)
                 {
                     Chess.board[x + Direction][y + 1].BackColor = Color.Green;
                 }
-                if (Chess.pieces[x + Direction][y - 1] is not Empty)
+                if (enemyLeft is not Empty && enemyLeft.team != team)
                 {
                     Chess.board[x + Direction][y - 1].BackColor = Color.Green;
                 }

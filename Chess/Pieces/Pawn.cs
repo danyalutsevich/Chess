@@ -73,6 +73,11 @@ namespace Chess.Pieces
 
             base.Move(x, y);
             firstMove = false;
+            if (x == 0 || x == 7)
+            {
+                Chess.pieces[x][y] = new Queen(x, y, team);
+                Chess.board[x][y].Image = Chess.pieces[x][y].texture;
+            }
 
         }
     }

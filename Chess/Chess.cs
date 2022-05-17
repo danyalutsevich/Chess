@@ -23,6 +23,8 @@ namespace Chess
 
         public static PictureBox[][]? board;
 
+        public static string Turn = "[";
+
         public Chess()
         {
             InitializeComponent();
@@ -118,17 +120,27 @@ namespace Chess
             labelX.Text = x.ToString();
             labelY.Text = y.ToString();
 
+            var piece = pieces[x][y];
+
+           
+
+
             if (((PictureBox)sender).BackColor.Equals(Color.Green))
             {
                 if (SelectedPiece is not null || SelectedPiece is not Empty)
                 {
                     ClearBoard();
-                    SelectedPiece.Move(x, y);
+                    if(SelectedPiece.team == Turn)
+                    {
+                        SelectedPiece.Move(x, y);
+                        Turn = Turn == "[" ? "]" : "[";
+                    }
+                   
+                    
                 }
             }
             else
             {
-                var piece = pieces[x][y];
                 if (piece is not Empty)
                 {
                     ClearBoard();
